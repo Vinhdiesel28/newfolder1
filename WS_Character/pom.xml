@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ltm</groupId>
+  <artifactId>ltm-ws-character</artifactId>
+  <version>1.0</version>
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <wsdl.url>http://36.50.135.242:2221/CharacterService?wsdl</wsdl.url>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.3.7</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>tao-client</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <phase>generate-sources</phase>
+                <goals><goal>run</goal></goals>
+              </execution>
+            </executions>
+            <dependencies>
+              <dependency>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-tools</artifactId>
+                <version>2.3.7</version>
+              </dependency>
+            </dependencies>
+            <configuration>
+              <target>
+                <mkdir dir="${project.basedir}/src/main/java" />
+                <mkdir dir="${project.build.outputDirectory}" />
+                <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport"
+                         classpathref="maven.plugin.classpath" />
+                <wsimport wsdl="${wsdl.url}" package="vn.medianews"
+                          sourcedestdir="${project.basedir}/src/main/java"
+                          destdir="${project.build.outputDirectory}"
+                          keep="true" verbose="true" encoding="UTF-8"
+                          xnocompile="true" fork="false" />
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
