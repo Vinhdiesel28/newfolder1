@@ -13,7 +13,7 @@ public class WS_character_nhom_tu_cung_so_nguyen_am {
         Map<Integer, List<String>> groups = new TreeMap<>();
         for (String word : a) groups.computeIfAbsent(vowels(word), k -> new ArrayList<>()).add(word);
         List<String> r = new ArrayList<>();
-        for (List<String> group : groups.values()) { Collections.sort(group); r.add(String.join(", ", group)); }
+        for (List<String> group : groups.values()) { Collections.sort(group); r.addAll(group); }
         return r;
     }
 
