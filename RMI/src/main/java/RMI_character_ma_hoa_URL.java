@@ -9,6 +9,6 @@ public class RMI_character_ma_hoa_URL {
     }
 
     public static String solve(String s) throws Exception {
-        return java.net.URLEncoder.encode(s, "UTF-8").replace("+", "%20");
+        return new java.net.URI(null, null, s, null).toASCIIString();
     }
 }
